@@ -1,0 +1,2 @@
+# DGATNet
+dynamic GAT network
