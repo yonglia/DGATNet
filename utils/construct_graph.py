@@ -71,26 +71,6 @@ def read_data(data_dir):
     y_list = []
     pseudo = []
     edge_att_list, edge_index_list,att_list = [], [], []
-
-    #res = read_sigle_data(data_dir, onlyfiles[0])
-
-    # parallar computing
-    # cores = multiprocessing.cpu_count()/16
-    # pool = multiprocessing.Pool(processes=int(cores))
-    # func = partial(read_sigle_data, data_dir)
-
-    # import timeit
-
-    # start = timeit.default_timer()
-
-    # res = pool.map(func, onlyfiles)
-
-    # pool.close()
-    # pool.join()
-
-    # stop = timeit.default_timer()
-
-    # print('Time: ', stop - start)
     
     res =[]
     for file_name in onlyfiles:
@@ -102,7 +82,7 @@ def read_data(data_dir):
         att_list.append(res[j][2])
         y_list.append(res[j][3])
         batch.append([j]*res[j][4])
-        pseudo.append(np.diag(np.ones(res[j][4])))
+        pseudo.append(np.diag(np.ones(res[j][4], dtype=np.int8)))
 
     edge_att_arr = np.concatenate(edge_att_list)
     edge_index_arr = np.concatenate(edge_index_list, axis=1)
@@ -116,7 +96,7 @@ def read_data(data_dir):
     batch_torch = torch.from_numpy(np.hstack(batch)).long()
     edge_index_torch = torch.from_numpy(edge_index_arr).long()
     #data = Data(x=att_torch, edge_index=edge_index_torch, y=y_torch, edge_attr=edge_att_torch)
-    pseudo_torch = torch.from_numpy(pseudo_arr).float()
+    pseudo_torch = torch.from_numpy(pseudo_arr)
     data = Data(x=att_torch, edge_index=edge_index_torch, y=y_torch, edge_attr=edge_att_torch, pos = pseudo_torch )
     data, slices = split(data, batch_torch)
 
@@ -147,6 +127,6 @@ def read_sigle_data(data_dir,filename):
 
     att = temp['fea']
 
-    return edge_att.data.numpy(),edge_index.data.numpy(),att,temp['indicator'], num_nodes
+    return edge_att.data.numpy(), edge_index.data.numpy(), att, temp['indicator'], num_nodes
 
 

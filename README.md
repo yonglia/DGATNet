@@ -1,4 +1,4 @@
-# PRGNN_fMRI
+# DGATNet
 
 ## Requirments 
 Installation 1:

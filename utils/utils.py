@@ -113,8 +113,8 @@ def train_test_split_noaug(mat_dir, kfold = 10, fold = 0):
 def train_val_test_split(mat_dir, kfold = 5, fold = 0, rep=100):
 
     subjects = loadmat(mat_dir)
-    pat_id = list(subjects['res_4'])
-    con_id = list(subjects['res_1'])
+    pat_id = list(subjects['AD'])
+    con_id = list(subjects['NC'])
     sub_list = pat_id + con_id
     label = list(np.ones(len(pat_id)))+list(np.zeros(len(con_id)))
     list1, list2 = (list(t) for t in zip(*sorted(zip(sub_list, label))))
