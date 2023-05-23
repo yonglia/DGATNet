@@ -120,3 +120,7 @@ for epoch in range(0, opt.n_epochs):
     
     print('{:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))
     print('Epoch: {:03d}, Train Loss: {:.7f}, Train Acc: {:.7f}, Test Loss: {:.7f}, Test Acc: {:.7f}'.format(epoch, tr_loss, tr_acc, val_loss, val_acc))
+    
+def load_model(path):
+    model_dict=model.load_state_dict(torch.load(path))
+    return model_dict
